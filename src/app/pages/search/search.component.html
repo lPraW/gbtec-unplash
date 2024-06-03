@@ -1,0 +1,25 @@
+<div class="search-container">
+    <input [formControl]="queryControl" placeholder="Search for images..." />
+  </div>
+
+<div *ngIf="loading" class="loader">
+    <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<div *ngIf="!loading && images.length > 0">
+    <div class="image-grid">
+        <div *ngFor="let image of images" class="image-item">
+            <img [src]="image.urls.thumb" alt="Image result" (click)="openImageView(image.urls.regular)"/>
+        </div>
+    </div>
+
+    <div class="pagination">
+        <button (click)="onPageChange(page - 1)" [disabled]="page === 1">Previous</button>
+        <span>Page {{ page }} of {{ totalImages }}</span>
+        <button (click)="onPageChange(page + 1)" [disabled]="page >= totalImages">Next</button>
+    </div>
+</div>
+
+<div *ngIf="!loading && images.length === 0" class="no-results">
+    No results found
+</div>
